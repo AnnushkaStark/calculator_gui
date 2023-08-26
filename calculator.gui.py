@@ -112,13 +112,16 @@ class Window(Ui_MainWindow,QMainWindow):
 
 
     def add_plus_or_minus(self):
-        if self.result[0] !='-':
-            self.result = '-' + self.result
-            self.lineEdit.setText(self.result)
+        try:
+            if self.result[0] !='-':
+                self.result = '-' + self.result
+                self.lineEdit.setText(self.result)
 
-        else:
-            self.result = self.result.replace(self.result[0],'')
-            self.lineEdit.setText(self.result)
+            else:
+                self.result = self.result.replace(self.result[0],'')
+                self.lineEdit.setText(self.result)
+        except IndexError:
+            self.lineEdit.setText('IndexError')
             
     def reset(self):
         self.result = ''
@@ -126,8 +129,9 @@ class Window(Ui_MainWindow,QMainWindow):
 
     
     def deleter(self):
-        self.result = self.result.replace(self.result[-1],'')
+        self.result = self.result[:-1]
         self.lineEdit.setText(self.result)
+           
 
 
    
@@ -137,7 +141,7 @@ class Window(Ui_MainWindow,QMainWindow):
 
         try:
             self.my_result = eval(self.result)
-            self.lineEdit.setText(str(eval(self.result)))
+            self.lineEdit.setText(str(float(eval(self.result))))
         except ZeroDivisionError:
             self.lineEdit.setText('ZeroDivisionError')
         except TypeError:
